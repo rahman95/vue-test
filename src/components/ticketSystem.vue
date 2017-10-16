@@ -20,7 +20,7 @@
           </div>
         </div>
         <div class="col-sm-2 text-left">
-          <button type="button" class="btn btn-light">
+          <button type="button" class="btn btn-light" @click.prevent="removeAttendee(index)">
             <span aria-hidden="true">×</span> Remove</button>
         </div>
       </div>
@@ -66,6 +66,9 @@ export default {
       this.attendees.push({
         name: ''
       })
+    },
+    removeAttendee: function (index) {
+      this.attendees.splice(index, 1)
     }
   }
 }
