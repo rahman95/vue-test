@@ -19,19 +19,6 @@
             >
           </div>
         </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label class="sr-only">Email address</label>
-            <input
-              type="email"
-              class="form-control"
-              placeholder="Enter email"
-              v-model="attendee.email"
-              name="attendees[][email]"
-              required
-            >
-          </div>
-        </div>
         <div class="col-sm-2 text-left">
           <button type="button" class="btn btn-light">
             <span aria-hidden="true">×</span> Remove</button>
@@ -40,16 +27,16 @@
       <div class="row justify-content-center">
         <div class="col-sm-6"></div>
         <div class="col-sm-2">
-          <button type="button" class="btn btn-secondary">Add Attendee</button>
+          <button type="button" class="btn btn-secondary" @click.prevent="addAttendee">Add</button>
         </div>
       </div>
       <hr>
       <div class="row justify-content-center">
         <div class="col-sm-6">
-          <span class="unit-price">${{ cost }} ea.</span>
+          <span class="unit-price">£{{ cost }}</span>
         </div>
         <div class="col-sm-2 text-left">
-          <button type="submit" class="btn btn-primary">Pay</button>
+          <button type="submit" class="btn btn-primary">Pay £{{ checkoutTotal }}</button>
         </div>
       </div>
     </form>
@@ -58,6 +45,28 @@
 
 <script>
 export default {
-  name: 'TicketSystem'
+  name: 'TicketSystem',
+  data () {
+    return {
+      attendees: [{ name: '' }],
+      cost: 9.99
+    }
+  },
+  computed: {
+    quantity: function () {
+      return this.attendees.length
+    },
+    checkoutTotal: function () {
+      return this.cost * this.quantity
+    }
+  },
+  methods: {
+    addAttendee: function (event) {
+      event.preventDefault()
+      this.attendees.push({
+        name: ''
+      })
+    }
+  }
 }
 </script>
